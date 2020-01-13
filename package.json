@@ -29,13 +29,15 @@
     "scripts": {
         "react-start": "BROWSER=NONE react-scripts start",
         "electron-start": "DEV=1 electron .",
-        "start": "concurrently 'npm run react-start' 'wait-on http://localhost:3000/ && npm run electron-start'",
+        "start": "concurrently \"react-scripts start BROWSER=none\" \"wait-on http://localhost:3000 && electron .\"",
         "react-build": "react-scripts build",
         "electron-build-linux": "electron-builder --linux -c.extraMetadata.main=build/electron.js",
         "electron-build-windows": "electron-builder --win -c.extraMetadata.main=build/electron.js",
+        "electron-build-mac": "electron-builder --mac -c.extraMetadata.main=build/electron.js",
         "build-linux": "npm run react-build && npm run electron-build-linux",
         "build-windows": "npm run react-build && npm run electron-build-windows",
-        "build": "npm run react-build && npm run electron-build-linux && npm run electron-build-windows",
+        "build-mac": "npm run react-build && npm run electron-build-mac",
+        "build": "npm run react-build && npm run electron-build-linux && npm run electron-build-windows & npm run electron-build-mac",
         "test": "react-scripts test",
         "eject": "react-scripts eject",
         "lint": "eslint src",
@@ -60,10 +62,10 @@
     ],
     "devDependencies": {
         "babel-eslint": "^10.0.1",
-        "concurrently": "^4.1.0",
+        "concurrently": "^5.0.0",
         "devtron": "^1.4.0",
         "electron": "^4.1.4",
-        "electron-builder": "^20.39.0",
+        "electron-builder": "^21.1.5",
         "electron-devtools-installer": "^2.2.4",
         "electron-react-devtools": "^0.5.3",
         "enzyme": "^3.9.0",
@@ -114,6 +116,12 @@
             "signingHashAlgorithms": [
                 "sha1",
                 "sha256"
+            ]
+        },
+        "mac": {
+            "category": "public.app-category.education",
+            "target": [
+                "default"
             ]
         },
         "nsis": {
